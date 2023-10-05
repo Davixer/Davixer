@@ -1,0 +1,36 @@
+import torch
+from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling, Trainer, TrainingArguments
+from docx import Document
+
+model_name = "gpt2"
+tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name)
+
+dataset = TextDataset(tokenizer=tokenizer, file_path="word1.txt")
+data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
+
+training_args = TrainingArguments(
+    output_dir="./my_model",
+    overwrite_output_dir=True,
+    num_train_epochs=1,
+    per_device_train_batch_size=4,
+    save_steps=10_000,
+    save_total_limit=2,
+)
+
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    data_collator=data_collator,
+    train_dataset=dataset,
+)
+
+trainer.train()
+trainer.save_model()
+
+# Carica il testo da un documento Word
+doc = Document("[test 1 (3).docx](https://github.com/Davixer/Davixer/files/12820781/test.1.3.docx)
+")
+text = ""
+for paragraph in doc.paragraphs:
+    text += paragraph.text + "\n"
