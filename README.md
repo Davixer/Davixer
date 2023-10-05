@@ -28,7 +28,7 @@ trainer = Trainer(
 trainer.train()
 trainer.save_model()
 
-# Carica il testo da un documento Word
+
 doc = Document("[test 1 (3).docx](https://github.com/Davixer/Davixer/files/12820781/test.1.3.docx)
 ")
 text = ""
