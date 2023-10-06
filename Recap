@@ -34,3 +34,6 @@ doc = Document("[test 1 (3).docx](https://github.com/Davixer/Davixer/files/12820
 text = ""
 for paragraph in doc.paragraphs:
     text += paragraph.text + "\n"
+
+from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
+
